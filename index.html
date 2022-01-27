@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <script type="text/javascript">
+            const params = new URLSearchParams(window.location.search);
+            console.log("This is the code parameter in the URL: " + params.get('code'));
+            if(params.has('code')){
+                console.log('This is the code to get the token: ' + params.get('code'));
+                function load(){
+                    let request = new XMLHttpRequest();
+                    request.onreadystatechange = function(){
+                        if (request.readyState === 4){
+                            console.log(request.response);
+                        }
+                    }
+                    request.open("POST", "http://localhost:5000/v1/token");
+                    request.send(params.get('code'));
+                }
+                load();
+            }else{
+                window.location.href ="https://identity.fortellis.io/oauth2/aus1p1ixy7YL8cMq02p7/v1/authorize?client_id={yourAPIKey}&response_type=code&scope=openid&redirect_uri=http://localhost:80/&state={yourUUID}"
+            }            
+        </script>
+    </head>
+    <body>
+        <h1>Hello World!</h1>
+        
+    </body>
+</html>
